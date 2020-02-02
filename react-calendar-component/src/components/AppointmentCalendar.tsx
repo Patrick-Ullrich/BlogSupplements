@@ -88,7 +88,6 @@ const AppointmentCalendar = () => {
                 )
             }
         }
-        console.log('previousDays', previousDays)
         return previousDays;
     }
 
@@ -108,7 +107,6 @@ const AppointmentCalendar = () => {
 
     const getRows = () => {
         let slots: JSX.Element[] = [...previousMonthDays(), ...getDaysOfMonth()];
-        console.log('slots', slots)
         let cells: JSX.Element[] = [];
 
         return slots.reduce((prev: JSX.Element[][], curr, index) => {
