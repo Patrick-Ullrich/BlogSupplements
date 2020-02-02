@@ -1,9 +1,28 @@
 import React, { useState } from 'react';
 import moment from 'moment'
+import styled from 'styled-components'
 
+const WeekDay = styled.th`
+    color: #92929d;
+    text-transform: uppercase;
+    font-size: 12px;
+    width: 48px;
+    margin: 0 5px;
+    height: 39px;
+`
+
+const DayCell = styled.td`
+    height: 48px;
+    text-align: center;
+
+    &:hover {
+        cursor: pointer;
+    }
+`
 
 const AppointmentCalendar = () => {
     const [selectedDay, setSelectedDay] = useState<moment.Moment>(moment())
+    const [selectedMonth, setSelectedMonth] = useState<moment.Moment>(moment());
 
     const previousMonthDays = () => {
         let previousDays: JSX.Element[] = [];
@@ -17,11 +36,10 @@ const AppointmentCalendar = () => {
             for (let i = 0; i < dayDifference; i++) {
                 let date = moment(firstOfMonth);
                 date.subtract((dayDifference - i), 'day');
-                console.log('date', date)
                 previousDays.push(
-                    <td key={i}>
+                    <DayCell key={i}>
                         {date.format('D')}
-                    </td>
+                    </DayCell>
                 )
             }
         }
@@ -33,9 +51,9 @@ const AppointmentCalendar = () => {
 
         for (let i = 1; i <= selectedDay.daysInMonth(); i++) {
             daysOfMonth.push(
-                <td key={i}>
+                <DayCell key={i}>
                     {i}
-                </td>
+                </DayCell>
             )
         }
 
@@ -65,22 +83,27 @@ const AppointmentCalendar = () => {
         }, [[]])
     }
 
-    return <table>
-        <thead>
-            <tr>
-                {moment.weekdaysShort().map(dow => (
-                    <th key={dow}>
-                        {dow}
-                    </th>
+    return <div>
+        <div>
+
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    {moment.weekdaysShort().map(dow => (
+                        <WeekDay key={dow}>
+                            {dow}
+                        </WeekDay>
+                    ))}
+                </tr>
+            </thead>
+            <tbody>
+                {getRows().map((row, index) => (
+                    <tr key={index}>{row}</tr>
                 ))}
-            </tr>
-        </thead>
-        <tbody>
-            {getRows().map((row, index) => (
-                <tr key={index}>{row}</tr>
-            ))}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 }
 
 export default AppointmentCalendar;
